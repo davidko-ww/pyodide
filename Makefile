@@ -18,6 +18,9 @@ OPTFLAGS=-O3
 CFLAGS=$(OPTFLAGS) -g -I$(PYTHONINCLUDE) -Wno-warn-absolute-paths
 CXXFLAGS=$(CFLAGS) -std=c++14
 
+# BASE_URL=https://pyodide.cdn.iodide.io/
+BASE_URL=https://localhost:4443/
+
 
 LDFLAGS=\
 	-O3 \
@@ -99,7 +102,7 @@ build/pyodide_dev.js: src/pyodide.js
 
 build/pyodide.js: src/pyodide.js
 	cp $< $@
-	sed -i -e 's#{{DEPLOY}}#https://pyodide.cdn.iodide.io/#g' $@
+	sed -i -e 's#{{DEPLOY}}#${BASE_URL}#g' $@
 
 	sed -i -e "s#{{ABI}}#$(PYODIDE_PACKAGE_ABI)#g" $@
 
@@ -117,7 +120,7 @@ build/renderedhtml.css: src/renderedhtml.less
 
 build/webworker.js: src/webworker.js
 	cp $< $@
-	sed -i -e 's#{{DEPLOY}}#https://pyodide.cdn.iodide.io/#g' $@
+	sed -i -e 's#{{DEPLOY}}#${BASE_URL}#g' $@
 
 build/webworker_dev.js: src/webworker.js
 	cp $< $@
